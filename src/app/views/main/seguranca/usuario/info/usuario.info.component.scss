@@ -1,0 +1,13 @@
+@import '~ng-smn-ui/lib/core/variables';
+
+:host {
+    ui-card {
+        position: relative;
+        margin-bottom: 20px;
+
+        .ui-progress {
+            position: absolute;
+        }
+    }
+}
+

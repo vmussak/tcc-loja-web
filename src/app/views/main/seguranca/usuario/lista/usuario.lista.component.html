@@ -1,0 +1,129 @@
+<div class="ui-s600">
+    <ui-card class="elevate-on-toolbar">
+        <div class="ui-progress accent" [class.hide]="!(loading && !searching)">
+            <div class="indeterminate"></div>
+        </div>
+        <ui-toolbar class="flat">
+            <button class="ui-button flat icon" type="button" uiRipple (click)="_location.back()">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            <span class="title" [ngClass]="{'hide': searchOpen}">Lista de usuários</span>
+            <div class="align-right">
+                <form #searchForm="ngForm" name="searchForm" class="ui-validate on-dirty" [ngClass]="{'open': searchOpen}">
+                    <ui-input-container>
+                        <input #searchFormText="ngModel"
+                               type="text"
+                               name="searchText"
+                               [(ngModel)]="searchText"
+                               uiMaxlength="200"
+                               uiInput
+                               [persistPlaceholder]="true"
+                               placeholder="Pesquisa"
+                               (keyup)="search(searchFormText.value)">
+                        <div class="ui-messages">
+                            <div *ngIf="searchFormText.errors && searchFormText.dirty">
+                                <div class="ui-message counter error">
+                                    {{searchText ? searchText.length : 0}}/200
+                                </div>
+                            </div>
+                        </div>
+                    </ui-input-container>
+                </form>
+                <button class="ui-button flat icon search" uiRipple (click)="toggleSearch()">
+                    <ui-progress-radial class="indeterminate" *ngIf="searching"></ui-progress-radial>
+                    <i class="material-icons" [ngClass]="{'show': !searchOpen}">search</i>
+                    <i class="material-icons" [ngClass]="{'show': searchOpen}">close</i>
+                </button>
+            </div>
+        </ui-toolbar>
+        <ui-data-table class="responsive">
+            <tbody>
+                <tr>
+                    <th class="picture empty"></th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th style="width: 50px"></th>
+                </tr>
+
+                <tr *ngFor="let usuario of usuarios" [routerLink]="['/usuario', usuario.id]">
+                    <td class="picture">
+                        <div class="letter" [ngStyle]="{'background-color': usuario.cor, 'color': isBright(usuario.cor) ? '#000' : '#FFF'}">
+                            {{usuario.nome.charAt(0).toUpperCase()}}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="ellipsis">
+                            {{usuario.nome}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="ellipsis">
+                            {{usuario.email}}
+                        </span>
+                    </td>
+                    <td>
+                        {{usuario.login}}
+                    </td>
+                    <td class="align-right">
+                        <button class="ui-button icon flat"
+                                uiRipple
+                                title="Excluir usuário"
+                                type="button"
+                                [uiMenuTrigger]="menuDelete"
+                                (click)="prepareToDelete(usuario); $event.stopPropagation()">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="empty" *ngIf="!usuarios || !usuarios.length">
+                    <td colspan="4">{{loading ? 'Carregando...' : 'Nenhum usuário encontrado'}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="align-right">
+                        <div class="ui-button-container align-right">
+                            <span class="pagination" *ngIf="totalLinhas">
+                                {{((pagina - 1) * 10) + 1}} - {{pagina * 10 < totalLinhas ? pagina * 10 : totalLinhas}} de {{totalLinhas}}
+                            </span>
+                            <button class="ui-button flat icon" uiRipple [disabled]="pagina < 2"
+                                    (click)="pagina = pagina - 1; getUsuarios();">
+                                <i class="material-icons">keyboard_arrow_left</i>
+                            </button>
+                            <button class="ui-button flat icon" uiRipple [disabled]="totalLinhas <= pagina * 10"
+                                    (click)="pagina = pagina + 1; getUsuarios();">
+                                <i class="material-icons">keyboard_arrow_right</i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </ui-data-table>
+    </ui-card>
+
+    <div class="ui-fab-container">
+        <a class="ui-button accent fab" uiRipple [routerLink]="['/usuario/novo']">
+            <i class="material-icons">add</i>
+        </a>
+    </div>
+</div>
+
+<ui-menu #menuDelete>
+    <div class="ui-menu-content size-2x">
+        <ui-subheader>Deseja excluir?</ui-subheader>
+        <div class="ui-menu-item" uiRipple (click)="deleteUsuario(usuarioParaDeletar); $event.stopPropagation()">
+            Sim
+        </div>
+        <div class="ui-menu-item" uiRipple>
+            Não
+        </div>
+    </div>
+</ui-menu>
+

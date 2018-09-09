@@ -1,0 +1,84 @@
+@import "~ng-smn-ui/lib/core/variables";
+
+/deep/ app-root, :host {
+    height: 100%;
+}
+
+:host {
+    background-color: ui-color('blue-grey', '900');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > .core {
+        max-width: 420px;
+        width: 100%;
+
+        .logo {
+            width: 230px;
+
+            img {
+                margin-bottom: 8px;
+            }
+        }
+
+        ui-card {
+            position: relative;
+            overflow: hidden;
+
+            .ui-progress {
+                position: absolute;
+            }
+
+            ui-card-title {
+                font-size: 18px;
+                padding: 16px 16px 0;
+            }
+
+            .ui-list li {
+                padding: 0 24px;
+            }
+
+            ui-card-content {
+                padding: 16px 16px 16px 16px;
+            }
+
+            .ui-button-container {
+                padding: 0 16px 16px;
+            }
+
+        }
+
+        @media (min-width: 300px) and (max-width: 600px) {
+            .logo {
+                //width: 100%;
+                //display: flex;
+
+                img {
+                    //width: 230px;
+                    margin-left: 16px;
+                }
+            }
+
+            ui-card {
+                margin: 0 16px;
+
+                ui-card-title {
+                    padding: 16px 16px 0;
+                }
+
+                .ui-list li {
+                    padding: 0 16px;
+                }
+
+                ui-card-content {
+                    padding: 16px;
+                }
+
+                .ui-button-container {
+                    padding: 0 16px 16px;
+                }
+            }
+        }
+    }
+}

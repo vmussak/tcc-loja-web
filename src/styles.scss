@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ng-smn-ui/lib/core/core";
+@import "~ng-smn-ui/lib/core/theme";
+
+$primary: (color: 'deep-purple', hue: '500');
+$accent: (color: 'blue-grey', hue: '900');
+
+$theme: ui-theme($primary, $accent);
+$theme-dark: ui-theme($primary, $accent, true);
+
+@include ui-core();
+
+@include ui-build-theme($theme);
+
+.dark {
+    @include ui-build-theme($theme-dark);
+}
+
+*::-webkit-scrollbar {
+    width: 6px!important;
+    height: 6px!important;
+    background-color: ui-color('red', '900');
+}
+*::-webkit-scrollbar-track {
+    background: rgba(255,255,255,.9);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.4);
+}
+

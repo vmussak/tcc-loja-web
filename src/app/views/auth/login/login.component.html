@@ -1,0 +1,95 @@
+<div class="core">
+    <div class="logo"></div>
+
+    <ui-card>
+        <div class="ui-progress primary" [class.hide]="!loading">
+            <div class="indeterminate"></div>
+        </div>
+        <ui-tabs-pages #tabsPages>
+            <div class="page pre-info">
+                <form #preLoginForm="ngForm" class="ui-validate on-submit on-dirty" (submit)="getInfo(preLoginForm, preLogin)">
+                    <fieldset >
+                        <ui-card-title>Iniciar sessão</ui-card-title>
+                        <ui-card-content>
+                            <ui-input-container>
+                                <input type="text"
+                                       name="usuario"
+                                       [(ngModel)]="preLogin.usuario"
+                                       uiInput
+                                       required
+                                       #preLoginUsuario="ngModel"
+                                       id="pre-login-usuario"
+                                       autofocus>
+                                <label for="pre-login-usuario">Usuário</label>
+                                <div class="ui-messages">
+                                    <div *ngIf="preLoginUsuario.errors && preLoginUsuario.dirty">
+                                        <div class="ui-message error" [hidden]="!preLoginUsuario.pristine && !preLoginUsuario.errors.required">
+                                            Use seu nome de usuário
+                                        </div>
+                                        <div class="ui-message error" [hidden]="!preLoginUsuario.errors.notFound">
+                                            Este nome de usuário não existe
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui-input-container>
+                        </ui-card-content>
+                    </fieldset>
+                    <div class="ui-button-container cover">
+                        <button class="ui-button primary full" uiRipple>Próximo</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="page">
+                <form #loginForm="ngForm" class="ui-validate on-submit on-dirty" (submit)="login(loginForm, info)">
+                    <fieldset>
+                        <ui-toolbar class="flat">
+                            <button class="ui-button flat icon" type="button" uiRipple (click)="backToLogin()">
+                                <i class="material-icons">arrow_back</i>
+                            </button>
+                        </ui-toolbar>
+                        <ul class="ui-list no-active" style="padding: 0">
+                            <li>
+                                <div class="avatar"
+                                     [ngStyle]="{'background-color': info.cor ? info.cor : 'white',
+                                                 'color': isBright(info.cor) ? 'black': 'white'}">
+                                    <span *ngIf="info && info.nome">{{info.nome.charAt(0)}}</span>
+                                </div>
+                                <div class="primary">{{info.nome}}</div>
+                            </li>
+                        </ul>
+                        <ui-card-content>
+                            <ui-input-container>
+                                <input [type]="typeText ? 'text' : 'password'"
+                                       [(ngModel)]="info.senha"
+                                       uiInput
+                                       required
+                                       name="senha"
+                                       #loginSenha="ngModel"
+                                       id="login-senha"
+                                       class="accent">
+                                <label>Senha</label>
+                                <div class="suffix ui-button flat icon" (click)="typeText = !typeText" uiRipple>
+                                    <i class="material-icons light">{{typeText ? 'visibility_off' : 'visibility'}}</i>
+                                </div>
+                                <div class="ui-messages">
+                                    <div *ngIf="loginSenha.errors && loginSenha.dirty">
+                                        <div class="ui-message error" [hidden]="!loginSenha.pristine && !loginSenha.errors.required">
+                                            Insira uma senha
+                                        </div>
+                                        <div class="ui-message error" [hidden]="!loginSenha.errors.wrongPassword">
+                                            Senha incorreta
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui-input-container>
+                        </ui-card-content>
+                        <div class="ui-button-container cover">
+                            <button class="ui-button primary full" uiRipple>Login</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </ui-tabs-pages>
+    </ui-card>
+</div>
