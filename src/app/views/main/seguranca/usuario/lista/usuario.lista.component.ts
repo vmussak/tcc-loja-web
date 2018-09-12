@@ -3,12 +3,13 @@ import {Component, AfterViewInit, ElementRef, OnInit, OnDestroy, ChangeDetectorR
 import {Location} from '@angular/common';
 import {Subject} from 'rxjs';
 import {UiToolbarService, UiElement, UiColor, UiSnackbar} from 'ng-smn-ui';
+import { UsuarioService } from '../../usuario/usuario.service';
 
 @Component({
     selector: 'usuario-lista',
     templateUrl: './usuario.lista.component.html',
     styleUrls: ['./usuario.lista.component.scss'],
-    providers: [UiColor]
+    providers: [UiColor, UsuarioService]
 })
 
 export class UsuarioListaComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -29,7 +30,9 @@ export class UsuarioListaComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private toolbarService: UiToolbarService,
                 private element: ElementRef,
                 private changeDetectorRef: ChangeDetectorRef,
-                public _location: Location) {
+                public _location: Location,
+                private usuarioService: UsuarioService ) {
+
         this.pagina = 1;
     }
 
@@ -81,36 +84,35 @@ export class UsuarioListaComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getUsuarios() {
         this.loading = true;
-        setTimeout(() => {
-            this.usuarios = [
-                {
-                    id: 1,
-                    nome: 'Vinicius Mussak',
-                    login: 'mussak',
-                    email: 'viniciusmussak@gmail.com',
-                    cor: '#1E88E5'
-                },
-                {
-                    id: 2,
-                    nome: 'Ronaldinho Gaucho',
-                    login: 'gaucho',
-                    email: 'ronaldinhogaucho@gmail.com',
-                    cor: '#E91E63'
-                }
-            ];
-            this.totalLinhas = 2;
-
+        this.usuarioService.selecionar(this.searchText).subscribe(data => {
+            this.usuarios = data['content'];
+            this.totalLinhas = data['content'].length;
             this.loading = false;
-        }, 300);
+        },
+        e => {
+            UiSnackbar.show({
+                text: 'Ocorreu um erro interno, tente novamente mais tarde.'
+            });
+            this.loading = false;
+        });
     }
 
     deleteUsuario(usuario) {
         this.loading = true;
 
-        setTimeout(() => {
-            this.usuarios.splice(this.usuarios.indexOf(usuario), 1);
+        this.usuarioService.excluir(usuario.id).subscribe(() => {
             this.loading = false;
-        }, 300);
+            UiSnackbar.show({
+                text: 'Usuário excluído com sucesso.'
+            });
+            this.getUsuarios();
+        },
+        e => {
+            UiSnackbar.show({
+                text: 'Ocorreu um erro interno, tente novamente mais tarde.'
+            });
+            this.loading = false;
+        });
     }
 
     prepareToDelete(usuario) {

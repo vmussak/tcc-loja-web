@@ -40,6 +40,7 @@
                     <div class="ui-flex-container">
                         <ui-input-container>
                             <input #fieldLogon="ngModel"
+                                   id="logon"
                                    type="text"
                                    [(ngModel)]="info.login"
                                    uiInput
@@ -56,6 +57,10 @@
                                     <div class="ui-message counter error"
                                          [hidden]="!fieldLogon.errors.uiMaxlength">
                                         {{info.login ? info.login.length : 0}}/255
+                                    </div>
+                                    <div class="ui-message error"
+                                         [hidden]="!fieldLogon.pristine && !fieldLogon.errors.duplicate">
+                                        Já exisite um usuário com esse login
                                     </div>
                                 </div>
                             </div>
@@ -109,36 +114,6 @@
                                     </div>
                                     <div class="ui-message error" *ngIf="fieldConfirmaSenha.hasError(['notMatch'])">
                                         Senhas não são iguais
-                                    </div>
-                                </div>
-                            </div>
-                        </ui-input-container>
-                    </div>
-
-                    <div class="ui-flex-container">
-                        <ui-input-container>
-                            <input #email="ngModel"
-                                   type="text"
-                                   [(ngModel)]="info.email"
-                                   uiInput
-                                   [pattern]="'[a-z0-9!#$%&\'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\\.[a-z0-9-]+)*'"
-                                   name="email"
-                                   required
-                                   uiMaxlength="255">
-                            <label>Email</label>
-                            <div class="ui-messages">
-                                <div *ngIf="email.errors && email.dirty">
-                                    <div class="ui-message error"
-                                         [hidden]="!email.pristine && !email.errors.required">
-                                        Email é obrigatório
-                                    </div>
-                                    <div class="ui-message error"
-                                         [hidden]="!email.errors.pattern">
-                                        E-mail está inválido
-                                    </div>
-                                    <div class="ui-message counter error"
-                                         [hidden]="!email.errors.uiMaxlength">
-                                        {{info.email ? info.email.length : 0}}/255
                                     </div>
                                 </div>
                             </div>
