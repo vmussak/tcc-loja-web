@@ -7,11 +7,7 @@
     </div>
     <span class="title">{{title}}</span>
     <div class="align-right">
-        <div class="avatar"
-             [uiMenuTrigger]="menuUser"
-             menu-align="right"
-             theme-class="menu-user"
-             [ngStyle]="{'background-color': user.cor ? user.cor : 'white',
+        <div class="avatar" [uiMenuTrigger]="menuUser" menu-align="right" theme-class="menu-user" [ngStyle]="{'background-color': user.cor ? user.cor : 'white',
                          'color': isBright(user.cor) ? 'black': 'white'}">
             <span *ngIf="user && user.nome">{{user.nome.charAt(0)}}</span>
         </div>
@@ -35,7 +31,11 @@
             </a>
             <a class="ui-list-item" uiRipple routerLink="usuario">
                 <i class="material-icons" style="margin-right: 10px">person</i>
-                Usuários
+                Usuário
+            </a>
+            <a class="ui-list-item" uiRipple routerLink="peca">
+                <i class="material-icons" style="margin-right: 10px">loyalty</i>
+                Peça
             </a>
         </div>
     </div>
@@ -45,10 +45,7 @@
 
 <ui-menu #menuUser>
     <header>
-        <div class="avatar"
-             [uiMenuTrigger]="menuUser"
-             menu-align="right"
-             [ngStyle]="{'background-color': user.cor ? user.cor : 'white',
+        <div class="avatar" [uiMenuTrigger]="menuUser" menu-align="right" [ngStyle]="{'background-color': user.cor ? user.cor : 'white',
                          'color': isBright(user.cor) ? 'black': 'white'}">
             <span>{{user.nome?.charAt(0)}}</span>
         </div>
@@ -60,6 +57,3 @@
         </div>
     </div>
 </ui-menu>
-
-
-

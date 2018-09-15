@@ -27,7 +27,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('Projeto');
+        this.titleService.setTitle('Loja');
         this.toolbarService.registerMainToolbar(document.getElementById('app-header'));
 
         this.toolbarService.set('');
