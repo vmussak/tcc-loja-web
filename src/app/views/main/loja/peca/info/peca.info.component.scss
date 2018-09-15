@@ -9,5 +9,42 @@
             position: absolute;
         }
     }
+
+    .picture {
+        margin: 0 auto;
+        width: 115px;
+        position: relative;
+        cursor: default;
+
+        div {
+            height: 115px;
+            width: 115px;
+            border-radius: 64px;
+            line-height: 124px;
+            text-align: center;
+            text-transform: uppercase;
+            user-select: none;
+            background: ui-color('grey', '200') center;
+            background-size: cover;
+            color: ui-color('grey', '500');
+            overflow: hidden;
+            font-size: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                font-size: 144px;
+                margin-top: 19px;
+            }
+        }
+        
+        button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
 }
 

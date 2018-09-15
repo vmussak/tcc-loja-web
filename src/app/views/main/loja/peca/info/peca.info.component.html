@@ -18,7 +18,7 @@
                         <div class="picture">
                             <div *ngIf="!info.imagem && !info.novaImagem" (click)="inputNovaImagem.click()">
                                 <span *ngIf="info.nome">{{info.nome.substring(0, 1)}}</span>
-                                <i *ngIf="!info.nome" class="material-icons">person</i>
+                                <i *ngIf="!info.nome" class="material-icons">loyalty</i>
                             </div>
                             <div *ngIf="info.imagem || info.novaImagem" [style.background-image]="'url(' + (info.novaImagem || info.imagem) + ')'"></div>
                             <button type="button" class="ui-button icon raised accent" uiRipple [uiMenuTrigger]="menuPicture" align="left">
@@ -46,28 +46,21 @@
 
                     <div class="ui-flex-container">
                         <ui-input-container>
-                            <ui-select #fieldTipoPeca="ngModel" name="idTipoPeca" [(ngModel)]="info.idTipoPeca" [chosen]="true" [options]="tiposPeca"
-                                value="_id" label="nome" uiInput required id="inputTipoPeca"></ui-select>
-                            <label for="inputCargo">
-                                {{!tipoPecaLoading ? 'Tipo de Peça' : 'Carregando tipos de peça'}}
-                            </label>
-                            <div class="ui-messages">
-                                <div *ngIf="fieldTipoPeca.errors && fieldTipoPeca.dirty">
-                                    <div class="ui-message error" [hidden]="!fieldTipoPeca.pristine && !fieldTipoPeca.errors.required">
-                                        Insira um tipo de peça
-                                    </div>
-                                </div>
-                            </div>
+                            <select uiInput [(ngModel)]="info.idTipoPeca" required name="idTipoPeca">
+                                <option></option>
+                                <option *ngFor="let tipoPeca of tiposPeca" [value]="tipoPeca.id">{{tipoPeca.nome}}</option>
+                            </select>
+                            <label>Tipo de peça</label>
                         </ui-input-container>
                     </div>
 
                     <div class="ui-flex-container">
                         <ui-input-container>
-                            <input #fieldCor="ngModel" id="tamanho" type="text" [(ngModel)]="info.tamanho" uiInput name="tamanho" required uiMaxlength="255">
+                            <input #fieldTamanho="ngModel" id="tamanho" type="text" [(ngModel)]="info.tamanho" uiInput name="tamanho" required uiMaxlength="255">
                             <label>Tamanho</label>
                             <div class="ui-messages">
-                                <div *ngIf="fieldCor.errors && fieldCor.dirty">
-                                    <div class="ui-message error" [hidden]="!fieldCor.pristine && !fieldCor.errors.required">
+                                <div *ngIf="fieldTamanho.errors && fieldTamanho.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldTamanho.pristine && !fieldTamanho.errors.required">
                                         Tamanho é obrigatório
                                     </div>
                                 </div>
@@ -103,6 +96,19 @@
                         </ui-input-container>
                     </div>
 
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldQuantidadeEstoque="ngModel" id="quantidadeEstoque" type="text" [(ngModel)]="info.quantidadeEstoque" uiInput name="quantidadeEstoque" required>
+                            <label>Quantidade em estoque</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldQuantidadeEstoque.errors && fieldQuantidadeEstoque.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldQuantidadeEstoque.pristine && !fieldQuantidadeEstoque.errors.required">
+                                        Quantidade em estoque é obrigatório
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
 
                 </ui-card-content>
             </fieldset>

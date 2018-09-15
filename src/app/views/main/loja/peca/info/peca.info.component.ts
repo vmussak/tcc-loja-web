@@ -20,6 +20,7 @@ export class PecaInfoComponent implements OnInit, AfterViewInit, OnDestroy {
     loading = true;
 
     @ViewChild('formPeca') formPeca;
+    @ViewChild('inputNovaImagem') inputNovaImagem;
 
     constructor(private toolbarService: UiToolbarService,
         public _location: Location,
@@ -129,5 +130,37 @@ export class PecaInfoComponent implements OnInit, AfterViewInit, OnDestroy {
                     });
                 }
             });
+    }
+
+    changeImagem(file, base64) {
+        this.info.nomeNovaImagem = file.name;
+        this.info.novaImagem = base64;
+    }
+
+    changeImagemError(file, customError) {
+        if (customError.type) {
+            UiSnackbar.show({
+                text: 'Escolha um arquivo JPG, JPEG ou PNG',
+                actionText: 'OK',
+                action: close => close()
+            });
+        } else if (customError.maxFileSize) {
+            UiSnackbar.show({
+                text: 'Escolha um arquivo menor que 15MB',
+                actionText: 'OK',
+                action: close => close()
+            });
+        } else {
+            UiSnackbar.show({
+                text: 'Não foi possível trocar a imagem',
+                actionText: 'OK',
+                action: close => close(),
+                duration: Infinity
+            });
+        }
+
+        this.info.novaImagem = null;
+        this.info.imagem = null;
+        this.inputNovaImagem.value = '';
     }
 }
