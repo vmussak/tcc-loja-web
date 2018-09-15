@@ -8,27 +8,27 @@ export class PecaService {
     }
 
     selecionar(filtro) {
-        return this.http.get(`http://localhost:4000/api/peca?filtro=${(filtro || '')}`);
+        return this.http.get(`http://192.168.1.5:4000/api/peca?filtro=${(filtro || '')}`);
     }
 
     buscar(id) {
-        return this.http.get(`http://localhost:4000/api/peca/${id}`);
+        return this.http.get(`http://192.168.1.5:4000/api/peca/${id}`);
     }
 
     buscarTiposPeca() {
-        return this.http.get(`http://localhost:4000/api/tipo-peca`);
+        return this.http.get(`http://192.168.1.5:4000/api/tipo-peca`);
     }
 
     cadastrar(peca) {
-        return this.http.post(`http://localhost:4000/api/peca`, peca);
+        return this.http.post(`http://192.168.1.5:4000/api/peca`, peca);
     }
 
     atualizar(peca) {
-        return this.http.put(`http://localhost:4000/api/peca/${peca.id}`, peca);
+        return this.http.put(`http://192.168.1.5:4000/api/peca/${peca.id}`, peca);
     }
 
     excluir(id) {
-        return this.http.delete(`http://localhost:4000/api/peca/${id}`);
+        return this.http.delete(`http://192.168.1.5:4000/api/peca/${id}`);
     }
 }
 

@@ -4,7 +4,7 @@
     "license": "MIT",
     "author": "Vinicius Mussak <vinicius.mussak@outlook.com>",
     "scripts": {
-        "start": "ng serve --port=15000",
+        "start": "ng serve --host 192.168.1.5 --port=15000",
         "run-prod": "ng serve --prod --port=15000",
         "build": "ng build",
         "build-prod": "ng build --prod"

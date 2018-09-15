@@ -1,0 +1,131 @@
+<div class="ui-s480">
+    <form #formCliente="ngForm" class="ui-validate on-dirty on-submit" (submit)="onSubmit(formCliente)">
+        <ui-card class="elevate-on-toolbar" [class.loading]="loading">
+            <div class="ui-progress accent" [class.hide]="!loading">
+                <div class="indeterminate"></div>
+            </div>
+            <ui-toolbar class="flat">
+                <button class="ui-button flat icon" type="button" uiRipple (click)="_location.back()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+                <span class="title">{{newRegister ? 'Novo cliente' : (loading ? 'Carregando' : 'Alterando ' + (info.nome || 'cliente'))}}</span>
+            </ui-toolbar>
+            <fieldset [disabled]="saving || loading">
+                <ui-card-content>
+                    <div>
+                        <input type="file" name="input" uiInputFile [(ngModel)]="info.imagemPath" [read]="changeImagem.bind(this)" [error]="changeImagemError.bind(this)"
+                            #inputNovaImagem #fieldNovaImagem="ngModel" accept="jpg,jpeg,png" max-file-size="15MB" hidden>
+                        <div class="picture">
+                            <div *ngIf="!info.imagem && !info.novaImagem" (click)="inputNovaImagem.click()">
+                                <span *ngIf="info.nome">{{info.nome.substring(0, 1)}}</span>
+                                <i *ngIf="!info.nome" class="material-icons">assignment_ind</i>
+                            </div>
+                            <div *ngIf="info.imagem || info.novaImagem" [style.background-image]="'url(' + (info.novaImagem || info.imagem) + ')'"></div>
+                            <button type="button" class="ui-button icon raised accent" uiRipple [uiMenuTrigger]="menuPicture" align="left">
+                                <i class="material-icons">photo_camera</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldNome="ngModel" type="text" [(ngModel)]="info.nome" uiInput name="nome" required uiMaxlength="50">
+                            <label>Nome</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldNome.errors && fieldNome.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldNome.pristine && !fieldNome.errors.required">
+                                        Nome é obrigatório
+                                    </div>
+                                    <div class="ui-message counter error" [hidden]="!fieldNome.errors.uiMaxlength">
+                                        {{info.nome ? info.nome.length : 0}}/50
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
+
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldCpf="ngModel" id="cpf" type="text" [(ngModel)]="info.cpf" uiInput uiMaskCpf name="cpf" required >
+                            <label>CPF</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldCpf.errors && fieldCpf.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldCpf.pristine && !fieldCpf.errors.required">
+                                        CPF é obrigatório
+                                    </div>
+                                    <div class="ui-message error"
+                                         [hidden]="!fieldCpf.pristine && !fieldCpf.errors.duplicate">
+                                        Já exisite um cliente com esse CPF
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
+
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldDataNascimento="ngModel" id="dataNascimento" type="text" [(ngModel)]="info.dataNascimento" uiInput uiMaskDate name="dataNascimento" required >
+                            <label>Data de Nascimento</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldDataNascimento.errors && fieldDataNascimento.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldDataNascimento.pristine && !fieldDataNascimento.errors.required">
+                                        Data de nascimento é obrigatório
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
+
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldEmail="ngModel" id="email" type="text" [(ngModel)]="info.email" uiInput name="email" required >
+                            <label>E-mail</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldEmail.errors && fieldEmail.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldEmail.pristine && !fieldEmail.errors.required">
+                                        E-mail é obrigatório
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
+
+                    <div class="ui-flex-container">
+                        <ui-input-container>
+                            <input #fieldTelefone="ngModel" id="telefone" type="text" [(ngModel)]="info.telefone" uiInput uiMaskPhone name="telefone" required >
+                            <label>Telefone</label>
+                            <div class="ui-messages">
+                                <div *ngIf="fieldTelefone.errors && fieldTelefone.dirty">
+                                    <div class="ui-message error" [hidden]="!fieldTelefone.pristine && !fieldTelefone.errors.required">
+                                        Telefone é obrigatório
+                                    </div>
+                                </div>
+                            </div>
+                        </ui-input-container>
+                    </div>
+
+                </ui-card-content>
+            </fieldset>
+        </ui-card>
+
+        <div class="ui-fab-container">
+            <button class="ui-button success fab" uiRipple [class.hide]="loading">
+                <ui-progress-radial class="indeterminate" *ngIf="saving"></ui-progress-radial>
+                <i class="material-icons">check</i>
+            </button>
+        </div>
+    </form>
+
+    <ui-menu #menuPicture>
+        <div class="ui-menu-content size-2x">
+            <div class="ui-menu-item" uiRipple (click)="inputNovaImagem.click()">
+                <i class="icon material-icons">add_a_photo</i>
+                {{!info.imagem && !info.novaImagem ? 'Selecionar imagem' : 'Nova imagem'}}
+            </div>
+            <div class="ui-menu-item" uiRipple *ngIf="info.imagem || info.novaImagem" (click)="info.novaImagem = null; info.imagem = null; inputNovaImagem.value = ''">
+                <i class="icon material-icons">delete</i>
+                Remover
+            </div>
+        </div>
+    </ui-menu>
+</div>

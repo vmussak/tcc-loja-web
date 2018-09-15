@@ -8,23 +8,23 @@ export class UsuarioService {
     }
 
     selecionar(filtro) {
-        return this.http.get(`http://localhost:4000/api/usuario?filtro=${(filtro || '')}`);
+        return this.http.get(`http://192.168.1.5:4000/api/usuario?filtro=${(filtro || '')}`);
     }
 
     buscar(id) {
-        return this.http.get(`http://localhost:4000/api/usuario/${id}`);
+        return this.http.get(`http://192.168.1.5:4000/api/usuario/${id}`);
     }
 
     cadastrar(usuario) {
-        return this.http.post(`http://localhost:4000/api/usuario`, usuario);
+        return this.http.post(`http://192.168.1.5:4000/api/usuario`, usuario);
     }
 
     atualizar(usuario) {
-        return this.http.put(`http://localhost:4000/api/usuario/${usuario.id}`, usuario);
+        return this.http.put(`http://192.168.1.5:4000/api/usuario/${usuario.id}`, usuario);
     }
 
     excluir(id) {
-        return this.http.delete(`http://localhost:4000/api/usuario/${id}`);
+        return this.http.delete(`http://192.168.1.5:4000/api/usuario/${id}`);
     }
 }
 

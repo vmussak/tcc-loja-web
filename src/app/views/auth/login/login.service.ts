@@ -8,11 +8,11 @@ export class LoginService {
     }
 
     getUserByLogin(login) {
-        return this.http.get(`http://localhost:4000/api/login/${login}`);
+        return this.http.get(`http://192.168.1.5:4000/api/login/${login}`);
     }
 
     getLogin(login) {
-        return this.http.post(`http://localhost:4000/api/login`, login);
+        return this.http.post(`http://192.168.1.5:4000/api/login`, login);
     }
 }
 
