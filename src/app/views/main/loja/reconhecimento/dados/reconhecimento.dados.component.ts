@@ -53,6 +53,7 @@ export class ReconhecimentoDadosComponent implements OnInit, AfterViewInit, OnDe
         this.reconhecimentoService.buscarDadosPorVisita(id).subscribe(data => {
             this.loading = false;
             this.info = data['content'];
+            console.log(this.info);
         }, e => {
             this.loading = false;
             if(e.error.statusCode == 404){

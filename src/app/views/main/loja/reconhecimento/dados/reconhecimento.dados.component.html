@@ -11,7 +11,54 @@
                 <span class="title">Reconhecimento de clientes</span>
             </ui-toolbar>
             <fieldset [disabled]="saving || loading">
-                
+                <ui-card-content>
+                    Foto do cliente
+                    <div class="picture">
+                        <div>
+                            <img [src]="info.imagem">
+                        </div>
+                    </div>
+                    Foto de hoje
+                    <div class="picture">
+                        <div>
+                            <img [src]="info.imagemAtual">
+                        </div>
+                    </div>
+                </ui-card-content>
+                <ui-card-content>
+                    <h1>{{info.nome}}</h1>
+                    <p>Ultima visita: {{info.dataUltimaVisita}}</p>
+                    <p *ngIf="info.dataVenda">Ultima venda: {{info.dataVenda}}</p>
+                    <p *ngIf="info.valor">Valor última compra: R$ {{info.valor}}</p>
+                    <!-- <div *ngIf="info.itensVenda.length">
+                        <ui-data-table class="responsive">
+                            <tbody>
+                                <tr>
+                                    <th class="picture empty"></th>
+                                    <th> Nome </th>
+                                    <th> Tamanho </th>
+                                    <th> Quantidade </th>
+                                </tr>
+
+                                <tr *ngFor="let item of itensVenda">
+                                    <td class="picture">
+                                        <div class="image" [style.background-image]="'url(' + item.imagem + ')'"></div>
+                                    </td>
+                                    <td>
+                                        {{item.nome}}
+                                    </td>
+                                    <td>
+                                        {{item.tamanho}}
+                                    </td>
+                                    <td>
+                                        {{item.quantidade}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ui-data-table>
+                    </div> -->
+                </ui-card-content>
+
             </fieldset>
         </ui-card>
     </form>
